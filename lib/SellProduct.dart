@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SellProduct extends StatefulWidget {
+  const SellProduct({super.key});
+
   @override
   State<SellProduct> createState() => _SellProductState();
 }
@@ -10,7 +12,7 @@ class _SellProductState extends State<SellProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Depo Listesi'),
+        title: const Text('Depo Listesi'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

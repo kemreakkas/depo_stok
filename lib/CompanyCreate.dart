@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CompanyCreate extends StatefulWidget {
+  const CompanyCreate({super.key});
+
   @override
   _CompanyCreateState createState() => _CompanyCreateState();
 }
@@ -24,37 +26,37 @@ class _CompanyCreateState extends State<CompanyCreate> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Satış Firması Oluştur'),
+        title: const Text('Satış Firması Oluştur'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text('Kayıtlı olmayan bir firma ekle'),
+            const Text('Kayıtlı olmayan bir firma ekle'),
             TextField(
               controller: _controller1,
-              decoration: InputDecoration(labelText: 'Firma Adı'),
+              decoration: const InputDecoration(labelText: 'Firma Adı'),
             ),
             TextField(
               controller: _controller2,
-              decoration: InputDecoration(labelText: 'Firma İletişim Kişi Adı'),
+              decoration: const InputDecoration(labelText: 'Firma İletişim Kişi Adı'),
             ),
             TextField(
               controller: _controller3,
-              decoration: InputDecoration(labelText: 'Firma Konumu'),
+              decoration: const InputDecoration(labelText: 'Firma Konumu'),
             ),
             TextField(
               controller: _controller4,
-              decoration: InputDecoration(labelText: 'Input 4'),
+              decoration: const InputDecoration(labelText: 'Input 4'),
             ),
             TextField(
               controller: _controller5,
-              decoration: InputDecoration(labelText: 'Input 5'),
+              decoration: const InputDecoration(labelText: 'Input 5'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _submitData,
-              child: Text('Oluştur'),
+              child: const Text('Oluştur'),
             ),
           ],
         ),

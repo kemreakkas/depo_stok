@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class WarehouseList extends StatelessWidget {
+  const WarehouseList({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Depo Listesi'),
+        title: const Text('Depo Listesi'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
