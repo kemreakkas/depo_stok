@@ -1,3 +1,6 @@
+// ignore_for_file: file_names
+
+import 'package:depostok/Constants.dart';
 import 'package:flutter/material.dart';
 
 class WarehouseList extends StatelessWidget {
@@ -7,12 +10,12 @@ class WarehouseList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Depo Listesi'),
+        title: const Text('Depo Listesi'),backgroundColor: canvasColor,foregroundColor: white,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
+          scrollDirection: Axis.vertical,
           child: DataTable(
             columns: const <DataColumn>[
               DataColumn(
@@ -23,19 +26,34 @@ class WarehouseList extends StatelessWidget {
               ),
               DataColumn(
                 label: Text(
-                  'ADI',
+                  'Stok Numarası',
                   style: TextStyle(fontStyle: FontStyle.italic),
                 ),
               ),
               DataColumn(
                 label: Text(
-                  'KONUMU',
+                  'Ürün Adı',
                   style: TextStyle(fontStyle: FontStyle.italic),
                 ),
               ),
               DataColumn(
                 label: Text(
-                  'SORUMLU',
+                  'Depo',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),DataColumn(
+                label: Text(
+                  'Stok',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),DataColumn(
+                label: Text(
+                  'Alış Fiyatı',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),DataColumn(
+                label: Text(
+                  'Satış Fiyatı',
                   style: TextStyle(fontStyle: FontStyle.italic),
                 ),
               ),
@@ -44,33 +62,346 @@ class WarehouseList extends StatelessWidget {
               DataRow(
                 cells: <DataCell>[
                   DataCell(Text('1')),
-                  DataCell(Text('John Doe')),
-                  DataCell(Text('25')),
-                  DataCell(Text('Developer')),
+                  DataCell(Text('Sak12345')),
+                  DataCell(Text('saksı')),
+                  DataCell(Text('A Deposu')),
+                  DataCell(Text('987')),
+                  DataCell(Text('100')),
+                  DataCell(Text('123')),
                 ],
               ),
               DataRow(
                 cells: <DataCell>[
                   DataCell(Text('2')),
-                  DataCell(Text('Jane Smith')),
-                  DataCell(Text('30')),
-                  DataCell(Text('Designer')),
+                  DataCell(Text('TPRK12345')),
+                  DataCell(Text('toprak')),
+                  DataCell(Text('A Deposu')),
+                  DataCell(Text('987')),
+                  DataCell(Text('111')),
+                  DataCell(Text('222')),
                 ],
               ),
               DataRow(
                 cells: <DataCell>[
                   DataCell(Text('3')),
-                  DataCell(Text('Alex Johnson')),
-                  DataCell(Text('28')),
-                  DataCell(Text('Manager')),
+                  DataCell(Text('Elma123')),
+                  DataCell(Text('Elma')),
+                  DataCell(Text('B Deposu')),
+                  DataCell(Text('5432')),
+                  DataCell(Text('2345')),
+                  DataCell(Text('5432')),
                 ],
               ),
               DataRow(
                 cells: <DataCell>[
                   DataCell(Text('4')),
-                  DataCell(Text('Chris Lee')),
-                  DataCell(Text('22')),
-                  DataCell(Text('Intern')),
+                  DataCell(Text('armut312312')),
+                  DataCell(Text('armut')),
+                  DataCell(Text('B Deposu')),
+                  DataCell(Text('324')),
+                  DataCell(Text('3245')),
+                  DataCell(Text('97867')),
+                ],
+              ),DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('1')),
+                  DataCell(Text('Sak12345')),
+                  DataCell(Text('saksı')),
+                  DataCell(Text('A Deposu')),
+                  DataCell(Text('987')),
+                  DataCell(Text('100')),
+                  DataCell(Text('123')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('2')),
+                  DataCell(Text('TPRK12345')),
+                  DataCell(Text('toprak')),
+                  DataCell(Text('A Deposu')),
+                  DataCell(Text('987')),
+                  DataCell(Text('111')),
+                  DataCell(Text('222')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('3')),
+                  DataCell(Text('Elma123')),
+                  DataCell(Text('Elma')),
+                  DataCell(Text('B Deposu')),
+                  DataCell(Text('5432')),
+                  DataCell(Text('2345')),
+                  DataCell(Text('5432')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('4')),
+                  DataCell(Text('armut312312')),
+                  DataCell(Text('armut')),
+                  DataCell(Text('B Deposu')),
+                  DataCell(Text('324')),
+                  DataCell(Text('3245')),
+                  DataCell(Text('97867')),
+                ],
+              ),DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('1')),
+                  DataCell(Text('Sak12345')),
+                  DataCell(Text('saksı')),
+                  DataCell(Text('A Deposu')),
+                  DataCell(Text('987')),
+                  DataCell(Text('100')),
+                  DataCell(Text('123')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('2')),
+                  DataCell(Text('TPRK12345')),
+                  DataCell(Text('toprak')),
+                  DataCell(Text('A Deposu')),
+                  DataCell(Text('987')),
+                  DataCell(Text('111')),
+                  DataCell(Text('222')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('3')),
+                  DataCell(Text('Elma123')),
+                  DataCell(Text('Elma')),
+                  DataCell(Text('B Deposu')),
+                  DataCell(Text('5432')),
+                  DataCell(Text('2345')),
+                  DataCell(Text('5432')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('4')),
+                  DataCell(Text('armut312312')),
+                  DataCell(Text('armut')),
+                  DataCell(Text('B Deposu')),
+                  DataCell(Text('324')),
+                  DataCell(Text('3245')),
+                  DataCell(Text('97867')),
+                ],
+              ),DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('1')),
+                  DataCell(Text('Sak12345')),
+                  DataCell(Text('saksı')),
+                  DataCell(Text('A Deposu')),
+                  DataCell(Text('987')),
+                  DataCell(Text('100')),
+                  DataCell(Text('123')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('2')),
+                  DataCell(Text('TPRK12345')),
+                  DataCell(Text('toprak')),
+                  DataCell(Text('A Deposu')),
+                  DataCell(Text('987')),
+                  DataCell(Text('111')),
+                  DataCell(Text('222')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('3')),
+                  DataCell(Text('Elma123')),
+                  DataCell(Text('Elma')),
+                  DataCell(Text('B Deposu')),
+                  DataCell(Text('5432')),
+                  DataCell(Text('2345')),
+                  DataCell(Text('5432')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('4')),
+                  DataCell(Text('armut312312')),
+                  DataCell(Text('armut')),
+                  DataCell(Text('B Deposu')),
+                  DataCell(Text('324')),
+                  DataCell(Text('3245')),
+                  DataCell(Text('97867')),
+                ],
+              ),DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('1')),
+                  DataCell(Text('Sak12345')),
+                  DataCell(Text('saksı')),
+                  DataCell(Text('A Deposu')),
+                  DataCell(Text('987')),
+                  DataCell(Text('100')),
+                  DataCell(Text('123')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('2')),
+                  DataCell(Text('TPRK12345')),
+                  DataCell(Text('toprak')),
+                  DataCell(Text('A Deposu')),
+                  DataCell(Text('987')),
+                  DataCell(Text('111')),
+                  DataCell(Text('222')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('3')),
+                  DataCell(Text('Elma123')),
+                  DataCell(Text('Elma')),
+                  DataCell(Text('B Deposu')),
+                  DataCell(Text('5432')),
+                  DataCell(Text('2345')),
+                  DataCell(Text('5432')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('4')),
+                  DataCell(Text('armut312312')),
+                  DataCell(Text('armut')),
+                  DataCell(Text('B Deposu')),
+                  DataCell(Text('324')),
+                  DataCell(Text('3245')),
+                  DataCell(Text('97867')),
+                ],
+              ),DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('1')),
+                  DataCell(Text('Sak12345')),
+                  DataCell(Text('saksı')),
+                  DataCell(Text('A Deposu')),
+                  DataCell(Text('987')),
+                  DataCell(Text('100')),
+                  DataCell(Text('123')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('2')),
+                  DataCell(Text('TPRK12345')),
+                  DataCell(Text('toprak')),
+                  DataCell(Text('A Deposu')),
+                  DataCell(Text('987')),
+                  DataCell(Text('111')),
+                  DataCell(Text('222')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('3')),
+                  DataCell(Text('Elma123')),
+                  DataCell(Text('Elma')),
+                  DataCell(Text('B Deposu')),
+                  DataCell(Text('5432')),
+                  DataCell(Text('2345')),
+                  DataCell(Text('5432')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('4')),
+                  DataCell(Text('armut312312')),
+                  DataCell(Text('armut')),
+                  DataCell(Text('B Deposu')),
+                  DataCell(Text('324')),
+                  DataCell(Text('3245')),
+                  DataCell(Text('97867')),
+                ],
+              ),DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('1')),
+                  DataCell(Text('Sak12345')),
+                  DataCell(Text('saksı')),
+                  DataCell(Text('A Deposu')),
+                  DataCell(Text('987')),
+                  DataCell(Text('100')),
+                  DataCell(Text('123')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('2')),
+                  DataCell(Text('TPRK12345')),
+                  DataCell(Text('toprak')),
+                  DataCell(Text('A Deposu')),
+                  DataCell(Text('987')),
+                  DataCell(Text('111')),
+                  DataCell(Text('222')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('3')),
+                  DataCell(Text('Elma123')),
+                  DataCell(Text('Elma')),
+                  DataCell(Text('B Deposu')),
+                  DataCell(Text('5432')),
+                  DataCell(Text('2345')),
+                  DataCell(Text('5432')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('4')),
+                  DataCell(Text('armut312312')),
+                  DataCell(Text('armut')),
+                  DataCell(Text('B Deposu')),
+                  DataCell(Text('324')),
+                  DataCell(Text('3245')),
+                  DataCell(Text('97867')),
+                ],
+              ),DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('1')),
+                  DataCell(Text('Sak12345')),
+                  DataCell(Text('saksı')),
+                  DataCell(Text('A Deposu')),
+                  DataCell(Text('987')),
+                  DataCell(Text('100')),
+                  DataCell(Text('123')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('2')),
+                  DataCell(Text('TPRK12345')),
+                  DataCell(Text('toprak')),
+                  DataCell(Text('A Deposu')),
+                  DataCell(Text('987')),
+                  DataCell(Text('111')),
+                  DataCell(Text('222')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('3')),
+                  DataCell(Text('Elma123')),
+                  DataCell(Text('Elma')),
+                  DataCell(Text('B Deposu')),
+                  DataCell(Text('5432')),
+                  DataCell(Text('2345')),
+                  DataCell(Text('5432')),
+                ],
+              ),
+              DataRow(
+                cells: <DataCell>[
+                  DataCell(Text('4')),
+                  DataCell(Text('armut312312')),
+                  DataCell(Text('armut')),
+                  DataCell(Text('B Deposu')),
+                  DataCell(Text('324')),
+                  DataCell(Text('3245')),
+                  DataCell(Text('97867')),
                 ],
               ),
             ],

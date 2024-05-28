@@ -21,6 +21,8 @@ dependencies:
   http: ^1.2.1
   shared_preferences: ^2.2.3
   sidebarx: ^0.17.1
+  geolocator: ^9.0.2
+
 
 
 dev_dependencies:

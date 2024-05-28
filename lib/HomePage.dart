@@ -1,10 +1,17 @@
+// ignore_for_file: file_names
+
+import 'package:depostok/CompanyList.dart';
+import 'package:depostok/Constants.dart';
+import 'package:depostok/MySales.dart';
+import 'package:depostok/RoutePage.dart';
+import 'package:depostok/SellProduct.dart';
+import 'package:depostok/SettingsPage.dart';
+import 'package:depostok/WarehouseList.dart';
 import 'package:flutter/material.dart';
 import 'package:sidebarx/sidebarx.dart';
 
-
-
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -40,18 +47,18 @@ class _HomePageState extends State<HomePage> {
               key: _key,
               appBar: isSmallScreen
                   ? AppBar(
-                backgroundColor: canvasColor,
-                title: Text(_getTitleByIndex(_controller.selectedIndex)),
-                leading: IconButton(
-                  onPressed: () {
-                    // if (!Platform.isAndroid && !Platform.isIOS) {
-                    //   _controller.setExtended(true);
-                    // }
-                    _key.currentState?.openDrawer();
-                  },
-                  icon: const Icon(Icons.menu),
-                ),
-              )
+                      backgroundColor: canvasColor,
+                      title: Text(_getTitleByIndex(_controller.selectedIndex)),
+                      leading: IconButton(
+                        onPressed: () {
+                          // if (!Platform.isAndroid && !Platform.isIOS) {
+                          //   _controller.setExtended(true);
+                          // }
+                          _key.currentState?.openDrawer();
+                        },
+                        icon: const Icon(Icons.menu),
+                      ),
+                    )
                   : null,
               drawer: ExampleSidebarX(controller: _controller),
               body: Row(
@@ -78,7 +85,7 @@ class ExampleSidebarX extends StatelessWidget {
   const ExampleSidebarX({
     super.key,
     required SidebarXController controller,
-  })  : _controller = controller;
+  }) : _controller = controller;
 
   final SidebarXController _controller;
 
@@ -164,32 +171,28 @@ class ExampleSidebarX extends StatelessWidget {
         SidebarXItem(
           icon: Icons.business_center,
           label: 'Firmalar',
-          selectable: false,
-          onTap: () => _showDisabledAlert(context),
-        ),SidebarXItem(
+           onTap: () => _showDisabledAlert(context),
+        ),
+        SidebarXItem(
           icon: Icons.route,
-          label: 'Rota',
-          selectable: false,
-          onTap: () => _showDisabledAlert(context),
-        ),SidebarXItem(
+          label: 'Güzergah',
+           onTap: () => _showDisabledAlert(context),
+        ),
+        SidebarXItem(
           icon: Icons.attach_money,
           label: 'Satışlar',
-          selectable: false,
-          onTap: () => _showDisabledAlert(context),
-        ),SidebarXItem(
+           onTap: () => _showDisabledAlert(context),
+        ),
+        SidebarXItem(
           icon: Icons.settings,
           label: 'Ayarlar',
-          selectable: false,
-          onTap: () => _showDisabledAlert(context),
+           onTap: () => _showDisabledAlert(context),
         ),
-
       ],
     );
   }
 
-  void _showDisabledAlert(BuildContext context) {
-
-  }
+  void _showDisabledAlert(BuildContext context) {}
 }
 
 class _ScreensExample extends StatelessWidget {
@@ -201,11 +204,11 @@ class _ScreensExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    //final theme = Theme.of(context);
     return AnimatedBuilder(
       animation: controller,
       builder: (context, child) {
-        final pageTitle = _getTitleByIndex(controller.selectedIndex);
+        // final pageTitle = _getTitleByIndex(controller.selectedIndex);
         switch (controller.selectedIndex) {
           case 0:
             return ListView.builder(
@@ -221,11 +224,20 @@ class _ScreensExample extends StatelessWidget {
                 ),
               ),
             );
+          case 1:
+            return const WarehouseList(); //Depo Bilgileri
+          case 2:
+            return const SellProduct(); //Ürün Satış
+          case 3:
+            return const CompanyList(); //Firmalar
+          case 4:
+            return Routepage(); //Güzergah
+          case 5:
+            return const MySales(); //Satışlar
+          case 6:
+            return const Settingspage(); //Ayarlar
           default:
-            return Text(
-              pageTitle,
-              style: theme.textTheme.headlineSmall,
-            );
+            return const Text('default state');
         }
       },
     );
@@ -253,10 +265,3 @@ String _getTitleByIndex(int index) {
   }
 }
 
-const primaryColor = Color(0xFF685BFF);
-const canvasColor = Color(0xFF2E2E48);
-const scaffoldBackgroundColor = Color(0xFF464667);
-const accentCanvasColor = Color(0xFF3E3E61);
-const white = Colors.white;
-final actionColor = const Color(0xFF5F5FA7).withOpacity(0.6);
-final divider = Divider(color: white.withOpacity(0.3), height: 1);

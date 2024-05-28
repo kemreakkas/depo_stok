@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 class CompanyCreate extends StatefulWidget {
@@ -15,11 +17,11 @@ class _CompanyCreateState extends State<CompanyCreate> {
   final TextEditingController _controller5 = TextEditingController();
 
   void _submitData() {
-    final String input1 = _controller1.text;
-    final String input2 = _controller2.text;
-    final String input3 = _controller3.text;
-    final String input4 = _controller4.text;
-    final String input5 = _controller5.text;
+    // final String input1 = _controller1.text;
+    // final String input2 = _controller2.text;
+    // final String input3 = _controller3.text;
+    // final String input4 = _controller4.text;
+    // final String input5 = _controller5.text;
   }
 
   @override

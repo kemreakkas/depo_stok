@@ -1,3 +1,7 @@
+// ignore_for_file: file_names
+
+import 'package:depostok/Constants.dart';
+import 'package:depostok/OrderPage.dart';
 import 'package:flutter/material.dart';
 
 class SellProduct extends StatefulWidget {
@@ -12,7 +16,17 @@ class _SellProductState extends State<SellProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Depo Listesi'),
+        title: const Text('Ürün Satış'),
+        backgroundColor: canvasColor,
+        foregroundColor: white,
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Orderpage()));
+              },
+              child: const Text('Sepete Git')),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
