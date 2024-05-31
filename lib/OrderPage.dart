@@ -12,6 +12,9 @@ class Orderpage extends StatefulWidget {
 class _OrderpageState extends State<Orderpage> {
   @override
   Widget build(BuildContext context) {
-    return const Text('orderpage');
+    return const SafeArea(child: Scaffold(body: Column(children: [Text('orderpage')],
+    
+
+ ),));
   }
 }

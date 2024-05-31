@@ -2,14 +2,14 @@
 
 import 'package:flutter/material.dart';
 
-class CompanyCreate extends StatefulWidget {
-  const CompanyCreate({super.key});
+class CompanyCreate2 extends StatefulWidget {
+  const CompanyCreate2({super.key});
 
   @override
-  _CompanyCreateState createState() => _CompanyCreateState();
+  _CompanyCreate2State createState() => _CompanyCreate2State();
 }
 
-class _CompanyCreateState extends State<CompanyCreate> {
+class _CompanyCreate2State extends State<CompanyCreate2> {
   final TextEditingController _controller1 = TextEditingController();
   final TextEditingController _controller2 = TextEditingController();
   final TextEditingController _controller3 = TextEditingController();

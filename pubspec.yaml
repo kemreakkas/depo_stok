@@ -24,6 +24,8 @@ dependencies:
   flutter_osm_plugin: ^1.0.5
   flutter_hooks: ^0.20.5
   pointer_interceptor: ^0.10.1+1
+  popup_menu: ^2.0.0
+  two_dimensional_scrollables: ^0.3.0
 
 
 

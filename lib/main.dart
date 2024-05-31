@@ -1,3 +1,4 @@
+import 'package:depostok/Constants.dart';
 import 'package:depostok/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,7 +19,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+         height = MediaQuery.of(context).size.height;
+      width = MediaQuery.of(context).size.width;
     return MaterialApp(
+      
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreenAccent),
         useMaterial3: true,

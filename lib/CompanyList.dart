@@ -23,7 +23,7 @@ class _CompanyListState extends State<CompanyList> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const CompanyCreate()));
+                        builder: (context) => const CompanyCreate2()));
               },
               child: const Text('Firma Ekle')),
         ],
@@ -31,14 +31,10 @@ class _CompanyListState extends State<CompanyList> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
+          scrollDirection: Axis.vertical,
           child: Column(
             children: [
-
-
-
-
-              DataTable(
+              DataTable(columnSpacing: height*0.05,
                 columns: const <DataColumn>[
                   DataColumn(
                     label: Text(
@@ -48,7 +44,7 @@ class _CompanyListState extends State<CompanyList> {
                   ),
                   DataColumn(
                     label: Text(
-                      'ADI',
+                      'FİRMA ADI',
                       style: TextStyle(fontStyle: FontStyle.italic),
                     ),
                   ),
@@ -60,42 +56,127 @@ class _CompanyListState extends State<CompanyList> {
                   ),
                   DataColumn(
                     label: Text(
-                      'SORUMLU',
+                      'İLETİŞİM KİŞİSİ',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                  ),   DataColumn(
+                    label: Text(
+                      'A',
                       style: TextStyle(fontStyle: FontStyle.italic),
                     ),
                   ),
+                  DataColumn(
+                    label: Text(
+                      'B',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'C',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                  ),DataColumn(
+                    label: Text(
+                      'D',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                  ),DataColumn(
+                    label: Text(
+                      'E',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                  ),DataColumn(
+                    label: Text(
+                      'F',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                  ), 
                 ],
                 rows: const <DataRow>[
-                  DataRow(
+                 DataRow(
                     cells: <DataCell>[
                       DataCell(Text('1')),
                       DataCell(Text('John Doe')),
                       DataCell(Text('25')),
-                      DataCell(Text('Developer')),
+                      DataCell(Text('a')),
+                      DataCell(Text('John Doe')),
+                      DataCell(Text('25')),
+                      DataCell(Text('aaa')),
+                      DataCell(Text('s')),
+                      DataCell(Text('d')),DataCell(Text('e')),
                     ],
-                  ),
-                  DataRow(
+                  ), DataRow(
                     cells: <DataCell>[
-                      DataCell(Text('2')),
-                      DataCell(Text('Jane Smith')),
-                      DataCell(Text('30')),
-                      DataCell(Text('Designer')),
+                      DataCell(Text('1')),
+                      DataCell(Text('John Doe')),
+                      DataCell(Text('25')),
+                      DataCell(Text('a')),
+                      DataCell(Text('John Doe')),
+                      DataCell(Text('25')),
+                      DataCell(Text('a')),
+                      DataCell(Text('s')),
+                      DataCell(Text('d')),DataCell(Text('e')),
                     ],
-                  ),
-                  DataRow(
+                  ), DataRow(
                     cells: <DataCell>[
-                      DataCell(Text('3')),
-                      DataCell(Text('Alex Johnson')),
-                      DataCell(Text('28')),
-                      DataCell(Text('Manager')),
+                      DataCell(Text('1')),
+                      DataCell(Text('John Doe')),
+                      DataCell(Text('25')),
+                      DataCell(Text('a')),
+                      DataCell(Text('John Doe')),
+                      DataCell(Text('25')),
+                      DataCell(Text('a')),
+                      DataCell(Text('s')),
+                      DataCell(Text('d')),DataCell(Text('e')),
                     ],
-                  ),
-                  DataRow(
+                  ), DataRow(
                     cells: <DataCell>[
-                      DataCell(Text('4')),
-                      DataCell(Text('Chris Lee')),
-                      DataCell(Text('22')),
-                      DataCell(Text('Intern')),
+                      DataCell(Text('1')),
+                      DataCell(Text('John Doe')),
+                      DataCell(Text('25')),
+                      DataCell(Text('a')),
+                      DataCell(Text('John Doe')),
+                      DataCell(Text('25')),
+                      DataCell(Text('a')),
+                      DataCell(Text('s')),
+                      DataCell(Text('d')),DataCell(Text('e')),
+                    ],
+                  ), DataRow(
+                    cells: <DataCell>[
+                      DataCell(Text('1')),
+                      DataCell(Text('John Doe')),
+                      DataCell(Text('25')),
+                      DataCell(Text('a')),
+                      DataCell(Text('John Doe')),
+                      DataCell(Text('25')),
+                      DataCell(Text('a')),
+                      DataCell(Text('s')),
+                      DataCell(Text('d')),DataCell(Text('e')),
+                    ],
+                  ), DataRow(
+                    cells: <DataCell>[
+                      DataCell(Text('1')),
+                      DataCell(Text('John Doe')),
+                      DataCell(Text('25')),
+                      DataCell(Text('a')),
+                      DataCell(Text('John Doe')),
+                      DataCell(Text('25')),
+                      DataCell(Text('a')),
+                      DataCell(Text('s')),
+                      DataCell(Text('d')),DataCell(Text('e')),
+                    ],
+                  ), DataRow(
+                    cells: <DataCell>[
+                      DataCell(Text('1')),
+                      DataCell(Text('John Doe')),
+                      DataCell(Text('25')),
+                      DataCell(Text('a')),
+                      DataCell(Text('John Doe')),
+                      DataCell(Text('25')),
+                      DataCell(Text('a')),
+                      DataCell(Text('s')),
+                      DataCell(Text('d')),DataCell(Text('e')),
                     ],
                   ),
                 ],

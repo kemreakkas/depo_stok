@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-import 'package:depostok/CompanyList.dart';
+import 'package:depostok/CompanyList2.dart';
 import 'package:depostok/Constants.dart';
 import 'package:depostok/MySales.dart';
 import 'package:depostok/Route/src/home/main_example.dart';
@@ -144,10 +144,10 @@ class ExampleSidebarX extends StatelessWidget {
       ),
       footerDivider: divider,
       headerBuilder: (context, extended) {
-        return SizedBox(
+        return const SizedBox(
           height: 100,
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(16.0),
             child: Text('LOGO')
             //Image.asset('assets/images/avatar.png'),
           ),
@@ -230,7 +230,7 @@ class _ScreensExample extends StatelessWidget {
           case 2:
             return const SellProduct(); //Ürün Satış
           case 3:
-            return const CompanyList(); //Firmalar
+            return   CompanyList2(); //Firmalar
           case 4:
             return const MainPageExample(); //Güzergah
           case 5:

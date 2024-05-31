@@ -12,6 +12,13 @@ class MySales extends StatefulWidget {
 class _MySalesState extends State<MySales> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold(
+      
+      body: Column(
+        children: [
+          Text('mysales')
+        ],
+      ),
+    );
   }
 }
