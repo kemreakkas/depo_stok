@@ -28,18 +28,18 @@ class _SimpleExampleState extends State<SimpleExample> {
         title: const Text("osm"),
       ),
       body: PageView(
-        children: <Widget>[
-          const Center(
-            child: Text("page n1"),
-          ),
-          SimpleOSM(),
-        ],
         controller: controller,
         onPageChanged: (p) {
           setState(() {
             indexPage = p;
           });
         },
+        children: <Widget>[
+            const Center(
+            child: Text("page n1"),
+          ),
+          SimpleOSM(),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: indexPage,

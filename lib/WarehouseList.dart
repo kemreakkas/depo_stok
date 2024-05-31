@@ -26,13 +26,13 @@ class WarehouseList extends StatelessWidget {
               ),
               DataColumn(
                 label: Text(
-                  'Stok Numarası',
+                  'Stok\nNumarası',
                   style: TextStyle(fontStyle: FontStyle.italic),
                 ),
               ),
               DataColumn(
                 label: Text(
-                  'Ürün Adı',
+                  'Ürün\nAdı',
                   style: TextStyle(fontStyle: FontStyle.italic),
                 ),
               ),
@@ -41,19 +41,22 @@ class WarehouseList extends StatelessWidget {
                   'Depo',
                   style: TextStyle(fontStyle: FontStyle.italic),
                 ),
-              ),DataColumn(
+              ),
+              DataColumn(
                 label: Text(
                   'Stok',
                   style: TextStyle(fontStyle: FontStyle.italic),
                 ),
-              ),DataColumn(
+              ),
+              DataColumn(
                 label: Text(
-                  'Alış Fiyatı',
+                  'Alış\nFiyatı',
                   style: TextStyle(fontStyle: FontStyle.italic),
                 ),
-              ),DataColumn(
+              ),
+              DataColumn(
                 label: Text(
-                  'Satış Fiyatı',
+                  'Satış\nFiyatı',
                   style: TextStyle(fontStyle: FontStyle.italic),
                 ),
               ),

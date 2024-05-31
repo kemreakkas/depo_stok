@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, unnecessary_overrides
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -299,6 +301,7 @@ class MapRotation extends HookWidget {
       heroTag: "RotationMapFab",
       elevation: 1,
       mini: true,
+      backgroundColor: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: ValueListenableBuilder(
@@ -313,7 +316,6 @@ class MapRotation extends HookWidget {
           child: Image.asset("asset/compass.png"),
         ),
       ),
-      backgroundColor: Colors.white,
     );
   }
 }
@@ -328,8 +330,8 @@ class MainNavigation extends StatelessWidget {
       },
       heroTag: "MainMenuFab",
       mini: true,
-      child: const Icon(Icons.menu),
       backgroundColor: Colors.white,
+      child: const Icon(Icons.menu),
     );
   }
 }

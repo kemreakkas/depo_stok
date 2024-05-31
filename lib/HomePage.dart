@@ -3,7 +3,7 @@
 import 'package:depostok/CompanyList.dart';
 import 'package:depostok/Constants.dart';
 import 'package:depostok/MySales.dart';
-import 'package:depostok/RoutePage.dart';
+import 'package:depostok/Route/src/home/main_example.dart';
 import 'package:depostok/SellProduct.dart';
 import 'package:depostok/SettingsPage.dart';
 import 'package:depostok/WarehouseList.dart';
@@ -148,7 +148,8 @@ class ExampleSidebarX extends StatelessWidget {
           height: 100,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Image.asset('assets/images/avatar.png'),
+            child: Text('LOGO')
+            //Image.asset('assets/images/avatar.png'),
           ),
         );
       },
@@ -231,7 +232,7 @@ class _ScreensExample extends StatelessWidget {
           case 3:
             return const CompanyList(); //Firmalar
           case 4:
-            return Routepage(); //Güzergah
+            return const MainPageExample(); //Güzergah
           case 5:
             return const MySales(); //Satışlar
           case 6:

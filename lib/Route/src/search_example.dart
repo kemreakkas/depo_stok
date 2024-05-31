@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, unnecessary_new, use_build_context_synchronously, unnecessary_string_interpolations
 
 import 'dart:async';
 
