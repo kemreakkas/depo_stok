@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'services.dart';
 import 'modal.dart';
@@ -21,7 +23,7 @@ class _ProductListPageState extends State<ProductListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Products'),
+        title: const Text('Products'),
       ),
       body: FutureBuilder<List<Product>>(
         future: futureProducts,
@@ -37,13 +39,13 @@ class _ProductListPageState extends State<ProductListPage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        icon: Icon(Icons.edit),
+                        icon: const Icon(Icons.edit),
                         onPressed: () {
                           // Düzenleme işlemi
                         },
                       ),
                       IconButton(
-                        icon: Icon(Icons.delete),
+                        icon: const Icon(Icons.delete),
                         onPressed: () async {
                           await apiService.deleteProduct(snapshot.data![index].id);
                           setState(() {
@@ -60,7 +62,7 @@ class _ProductListPageState extends State<ProductListPage> {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
 
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );

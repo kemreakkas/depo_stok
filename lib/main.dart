@@ -8,7 +8,7 @@ void main() {
     DeviceOrientation.landscapeRight,
     DeviceOrientation.landscapeLeft,
   ]).then((_) {
-    runApp(MyApp());
+    runApp(const MyApp());
   });
 }
 
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home:   HomePage(),
+      home:   const HomePage(),
     );
   }
 }
