@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-import 'package:depostok/CompanyList2.dart';
+import 'package:depostok/CompanyList.dart';
 import 'package:depostok/Constants.dart';
 import 'package:depostok/MySales.dart';
 import 'package:depostok/Route/src/home/main_example.dart';
@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SidebarX Example',
+      
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: primaryColor,
@@ -98,7 +98,7 @@ class ExampleSidebarX extends StatelessWidget {
         decoration: BoxDecoration(
           color: canvasColor,
           borderRadius: BorderRadius.circular(20),
-        ),
+        ),  
         hoverColor: scaffoldBackgroundColor,
         textStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
         selectedTextStyle: const TextStyle(color: Colors.white),
@@ -230,13 +230,13 @@ class _ScreensExample extends StatelessWidget {
           case 2:
             return const SellProduct(); //Ürün Satış
           case 3:
-            return   CompanyList2(); //Firmalar
+            return   CompanyList(); //Firmalar
           case 4:
             return const MainPageExample(); //Güzergah
           case 5:
             return const MySales(); //Satışlar
           case 6:
-            return const Settingspage(); //Ayarlar
+            return UserFormScreen();// UserListScreen(); //Ayarlar
           default:
             return const Text('default state');
         }
