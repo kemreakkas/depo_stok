@@ -26,6 +26,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
          height = MediaQuery.of(context).size.height;
       width = MediaQuery.of(context).size.width;
+      Map<DateTime, List<String>> notes = {};
+
     return const MaterialApp(
       
     /*  theme: ThemeData(

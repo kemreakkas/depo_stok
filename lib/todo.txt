@@ -1,0 +1,4 @@
+// TO DO: Takvim üzerinden istenen tarihe gidebilme
+// Boş not eklememe
+// seçilen tarihe gidilğdiğinde notlar siliniyor
+// notlar ekranına firma ve durum içeren butonlar ekle-- firma seçilir. Butonlardan (ulaşılamadı/satıldı/satılamadı)

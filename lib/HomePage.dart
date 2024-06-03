@@ -1,15 +1,14 @@
 // ignore_for_file: file_names
-// TO DO: Takvim üzerinden istenen tarihe gidebilme
-// Boş not eklememe
-// seçilen tarihe gidilğdiğinde notlar siliniyor
-// notlar ekranına firma ve durum içeren butonlar ekle-- firma seçilir. Butonlardan (ulaşılamadı/satıldı/satılamadı)
+
 import 'package:depostok/CompanyList.dart';
 import 'package:depostok/Constants.dart';
+import 'package:depostok/Homesidebar.dart';
 import 'package:depostok/MySales.dart';
 import 'package:depostok/Route/src/home/main_example.dart';
 import 'package:depostok/SellProduct.dart';
 import 'package:depostok/SettingsPage.dart';
 import 'package:depostok/WarehouseList.dart';
+import 'package:depostok/notes.dart';
 import 'package:flutter/material.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -47,22 +46,10 @@ class _HomePageState extends State<HomePage> {
           return SafeArea(
             child: Scaffold(
               key: _key,
-              appBar: isSmallScreen
-                  ? AppBar(
-                      backgroundColor: canvasColor,
-                      title: Text(_getTitleByIndex(_controller.selectedIndex)),
-                      leading: IconButton(
-                        onPressed: () {
-                          _key.currentState?.openDrawer();
-                        },
-                        icon: const Icon(Icons.menu),
-                      ),
-                    )
-                  : null,
-              drawer: ExampleSidebarX(controller: _controller),
+              drawer: HomeSidebarX(controller: _controller),
               body: Row(
                 children: [
-                  if (!isSmallScreen) ExampleSidebarX(controller: _controller),
+                  if (!isSmallScreen) HomeSidebarX(controller: _controller),
                   Expanded(
                     child: Center(
                       child: _ScreensExample(
@@ -80,120 +67,6 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class ExampleSidebarX extends StatelessWidget {
-  const ExampleSidebarX({
-    super.key,
-    required SidebarXController controller,
-  }) : _controller = controller;
-
-  final SidebarXController _controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return SidebarX(
-      controller: _controller,
-      theme: SidebarXTheme(
-        margin: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: canvasColor,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        hoverColor: scaffoldBackgroundColor,
-        textStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
-        selectedTextStyle: const TextStyle(color: Colors.white),
-        hoverTextStyle: const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.w500,
-        ),
-        itemTextPadding: const EdgeInsets.only(left: 30),
-        selectedItemTextPadding: const EdgeInsets.only(left: 30),
-        itemDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: canvasColor),
-        ),
-        selectedItemDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: actionColor.withOpacity(0.37),
-          ),
-          gradient: const LinearGradient(
-            colors: [accentCanvasColor, canvasColor],
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.28),
-              blurRadius: 30,
-            )
-          ],
-        ),
-        iconTheme: IconThemeData(
-          color: Colors.white.withOpacity(0.7),
-          size: 20,
-        ),
-        selectedIconTheme: const IconThemeData(
-          color: Colors.white,
-          size: 20,
-        ),
-      ),
-      extendedTheme: const SidebarXTheme(
-        width: 200,
-        decoration: BoxDecoration(
-          color: canvasColor,
-        ),
-      ),
-      footerDivider: divider,
-      headerBuilder: (context, extended) {
-        return const SizedBox(
-          height: 100,
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text('LOGO')
-          ),
-        );
-      },
-      items: [
-        SidebarXItem(
-          icon: Icons.home,
-          label: 'Ana Sayfa',
-          onTap: () {
-            debugPrint('Home');
-          },
-        ),
-        const SidebarXItem(
-          icon: Icons.warehouse,
-          label: 'Depo Bilgileri',
-        ),
-        const SidebarXItem(
-          icon: Icons.sell,
-          label: 'Ürün Satış',
-        ),
-        SidebarXItem(
-          icon: Icons.business_center,
-          label: 'Firmalar',
-           onTap: () => _showDisabledAlert(context),
-        ),
-        SidebarXItem(
-          icon: Icons.route,
-          label: 'Güzergah',
-           onTap: () => _showDisabledAlert(context),
-        ),
-        SidebarXItem(
-          icon: Icons.attach_money,
-          label: 'Satışlar',
-           onTap: () => _showDisabledAlert(context),
-        ),
-        SidebarXItem(
-          icon: Icons.settings,
-          label: 'Ayarlar',
-           onTap: () => _showDisabledAlert(context),
-        ),
-      ],
-    );
-  }
-
-  void _showDisabledAlert(BuildContext context) {}
-}
-
 class _ScreensExample extends StatefulWidget {
   _ScreensExample({
     required this.controller,
@@ -209,7 +82,6 @@ class _ScreensExampleState extends State<_ScreensExample> {
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
   final _controller = SidebarXController(selectedIndex: 0, extended: true);
-  final _key = GlobalKey<ScaffoldState>();
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     setState(() {
@@ -249,7 +121,12 @@ class _ScreensExampleState extends State<_ScreensExample> {
                       crossAxisCount: 2,
                       children: [
                         _buildCalendar(),
-                        _buildNotes(),
+                        NotesSection(notes: notes[selectedDay] ?? [],onNotesChanged:  (updatedNotes) {
+                  setState(() {
+                    notes[selectedDay] = updatedNotes;
+                  });
+                },),
+                        //_buildNotes(),
                       ],
                     ),
                   ),
@@ -374,7 +251,7 @@ class _ScreensExampleState extends State<_ScreensExample> {
     );
   }
 
-  Widget _buildNotes() {
+  /*Widget _buildNotes() {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -398,26 +275,5 @@ class _ScreensExampleState extends State<_ScreensExample> {
         ),
       ),
     );
-  }
-}
-
-String _getTitleByIndex(int index) {
-  switch (index) {
-    case 0:
-      return 'Home';
-    case 1:
-      return 'Search';
-    case 2:
-      return 'People';
-    case 3:
-      return 'Favorites';
-    case 4:
-      return 'Custom iconWidget';
-    case 5:
-      return 'Profile';
-    case 6:
-      return 'Settings';
-    default:
-      return 'Not found page';
-  }
+  }*/
 }

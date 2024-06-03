@@ -102,7 +102,7 @@ class _CompanyListState extends State<CompanyList> {
           ),
         ],
       ),
-      body: Column(
+      body: Column(crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
