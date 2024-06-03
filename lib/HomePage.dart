@@ -4,6 +4,7 @@ import 'package:depostok/CompanyList.dart';
 import 'package:depostok/Constants.dart';
 import 'package:depostok/Homesidebar.dart';
 import 'package:depostok/MySales.dart';
+import 'package:depostok/Route/main.dart';
 import 'package:depostok/Route/src/home/main_example.dart';
 import 'package:depostok/SellProduct.dart';
 import 'package:depostok/SettingsPage.dart';
@@ -121,11 +122,14 @@ class _ScreensExampleState extends State<_ScreensExample> {
                       crossAxisCount: 2,
                       children: [
                         _buildCalendar(),
-                        NotesSection(notes: notes[selectedDay] ?? [],onNotesChanged:  (updatedNotes) {
-                  setState(() {
-                    notes[selectedDay] = updatedNotes;
-                  });
-                },),
+                        NotesSection(
+                          notes: notes[selectedDay] ?? [],
+                          onNotesChanged: (updatedNotes) {
+                            setState(() {
+                              notes[selectedDay] = updatedNotes;
+                            });
+                          },
+                        ),
                         //_buildNotes(),
                       ],
                     ),
@@ -144,7 +148,7 @@ class _ScreensExampleState extends State<_ScreensExample> {
           case 3:
             return CompanyList(); //Firmalar
           case 4:
-            return const MainPageExample(); //Güzergah
+            return RouteHomePage(); // MainPageExample(); //Güzergah
           case 5:
             return MySales(); //Satışlar
           case 6:
@@ -187,9 +191,8 @@ class _ScreensExampleState extends State<_ScreensExample> {
             )
           ],
         ),
-        iconTheme: IconThemeData(
-          color: Colors.white.withOpacity(0.7),
-          size: 20),
+        iconTheme:
+            IconThemeData(color: Colors.white.withOpacity(0.7), size: 20),
         selectedIconTheme: const IconThemeData(
           color: Colors.white,
           size: 20,
@@ -250,30 +253,4 @@ class _ScreensExampleState extends State<_ScreensExample> {
       ),
     );
   }
-
-  /*Widget _buildNotes() {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Text(
-              'Notlarım (${selectedDay.toLocal().toString().split(' ')[0]})',
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            Expanded(
-              child: NotesSection(
-                notes: notes[selectedDay] ?? [],
-                onNotesChanged: (updatedNotes) {
-                  setState(() {
-                    notes[selectedDay] = updatedNotes;
-                  });
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }*/
 }

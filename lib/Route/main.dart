@@ -1,26 +1,17 @@
-/*
 
 
+
+import 'package:depostok/Route/src/home/main_example.dart';
+import 'package:depostok/Route/src/search_example.dart';
+import 'package:depostok/Route/src/simple_example_hook.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_osm_plugin_example/src/home/main_example.dart';
-import 'package:flutter_osm_plugin_example/src/search_example.dart';
-import 'package:flutter_osm_plugin_example/src/simple_example_hook.dart';
 
 //import 'src/adv_home/home_example.dart';
 import 'src/home/home_example.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // if (kIsWeb) {
-  //   runApp(WebApp());
-  // } else {
-  //   await dotenv.load(fileName: ".env");
-  //    runApp(MyApp());
-  // }
-  runApp(MyApp());
-}
 
-class MyApp extends StatelessWidget {
+
+class RouteHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -52,4 +43,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-**/

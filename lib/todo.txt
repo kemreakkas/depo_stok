@@ -2,3 +2,47 @@
 // Boş not eklememe
 // seçilen tarihe gidilğdiğinde notlar siliniyor
 // notlar ekranına firma ve durum içeren butonlar ekle-- firma seçilir. Butonlardan (ulaşılamadı/satıldı/satılamadı)
+
+
+
+
+Depo Listesi 
+    ID
+    stok numarası
+    ürün adı
+    depo 
+    stok adedi
+    alış fiyatı
+    satış fiyatı
+
+
+Firma Listesi
+    Firma adı
+    Firma telefonu
+    Firma sahibi
+    Firma Sorumlusu
+    Firma Sorumlusu telefonu
+    Firma Adresi
+    
+Ürün satış
+    ID
+    stok numarası
+    ürün adı
+    depo adı 
+    stok adedi
+    alış fiyatı
+    satış fiyatı
+
+Sepete Git
+    ID
+    stok numarası
+    ürün adı
+    depo adı 
+    stok adedi
+    satılan stok adedi
+    satış fiyatı
+    
+
+
+
+
