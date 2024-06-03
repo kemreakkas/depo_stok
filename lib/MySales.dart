@@ -1,8 +1,7 @@
-// ignore_for_file: file_names, use_key_in_widget_constructors, library_private_types_in_public_api
-
+import 'package:depostok/Constants.dart';
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
- 
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class MySales extends StatefulWidget {
   @override
@@ -10,114 +9,206 @@ class MySales extends StatefulWidget {
 }
 
 class _MySalesState extends State<MySales> {
-  Map<DateTime, List<String>> notes = {};
-  DateTime selectedDay = DateTime.now();
+  List<String> customers = [];
+  List<bool> selectedCustomers = [];
 
-  void _onDaySelected(DateTime day, DateTime focusedDay) {
+  final TextEditingController _customerController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCustomers();
+  }
+
+  Future<void> _loadCustomers() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? customersString = prefs.getString('customers');
+    if (customersString != null) {
+      List<dynamic> customersJson = json.decode(customersString);
+      setState(() {
+        customers = customersJson.map((e) => e.toString()).toList();
+        selectedCustomers = List<bool>.generate(customers.length, (index) => false);
+      });
+    }
+  }
+
+  Future<void> _saveCustomers() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String customersString = json.encode(customers);
+    await prefs.setString('customers', customersString);
+  }
+
+  void _addCustomer() {
+    if (_customerController.text.isNotEmpty) {
+      setState(() {
+        customers.add(_customerController.text);
+        selectedCustomers.add(false);
+        _customerController.clear();
+        _saveCustomers();
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Müşteri adı boş olamaz!'),
+        ),
+      );
+    }
+  }
+
+  void _deleteCustomer(int index) {
     setState(() {
-      selectedDay = day;
+      customers.removeAt(index);
+      selectedCustomers.removeAt(index);
+      _saveCustomers();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.count(
-          crossAxisCount: 2,
+    int selectedCount = selectedCustomers.where((c) => c).length;
+    int totalCount = customers.length;
+
+    double percentage = totalCount > 0 ? (selectedCount / totalCount) * 100 : 0;
+
+    return SafeArea(
+      child: Scaffold(
+        body: Row(
           children: [
-            Card(
+            Expanded(
+              flex: 1,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    const Text(
-                      'Takvim',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: _customerController,
+                            decoration: const InputDecoration(
+                              labelText: 'Müşteri Adı',
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.add),
+                          onPressed: _addCustomer,
+                        ),
+                      ],
                     ),
                     Expanded(
-                      child: TableCalendar(headerStyle: const HeaderStyle(formatButtonVisible: false),
-                        locale: 'tr_TR',
-                        firstDay: DateTime.utc(2020, 10, 16),
-                        lastDay: DateTime.utc(2030, 3, 14),
-                        focusedDay: selectedDay,
-                        selectedDayPredicate: (day) => isSameDay(day, selectedDay),
-                        onDaySelected: _onDaySelected,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Text(
-                      'Notlarım (${selectedDay.toLocal().toString().split(' ')[0]})',
-                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    Expanded(
-                      child: NotesSection(
-                        notes: notes[selectedDay] ?? [],
-                        onNotesChanged: (updatedNotes) {
-                          setState(() {
-                            notes[selectedDay] = updatedNotes;
-                          });
+                      child: ListView.builder(
+                        itemCount: customers.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(customers[index]),
+                            leading: Checkbox(
+                              value: selectedCustomers[index],
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  selectedCustomers[index] = value!;
+                                });
+                              },
+                            ),
+                            trailing: IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                _deleteCustomer(index);
+                              },
+                            ),
+                          );
                         },
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-            const Card(
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
+            ), Column(children: [
+              Padding(
+                padding: const EdgeInsets.all(50.0),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Satışlarım',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    Expanded(
-                      child: HorizontalBarChart(
-                        data: [50, 25], // Satış verileri
-                        labels: ['Ürün A', 'Ürün B'], // Satış etiketleri
-                        colors: [Colors.blue, Colors.red], // Çubuk renkleri
-                      ),
-                    ),
+                    Text('İşlem Sayısı: $selectedCount'),
+                    Text('Toplam Müşteri Sayısı: $totalCount'),
                   ],
+                ),
+              ), Padding(
+              padding: const EdgeInsets.only(right: 50),
+              child: SizedBox(height: height*0.45,width: width*0.3,
+                child: Expanded(
+                  flex: 1,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CustomPaint(
+                            painter: DoughnutChartPainter(
+                              selectedCount: selectedCount,
+                              totalCount: totalCount,
+                            ),
+                            child: Center(
+                              child: Text(
+                                '${percentage.toStringAsFixed(1)}%',
+                                style: const TextStyle(
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                     
+                    ],
+                  ),
                 ),
               ),
             ),
-            const Card(
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Text(
-                      'Tamamlanan Müşteri',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    Expanded(
-                      child: HorizontalBarChart(
-                        data: [70, 20], // Tamamlanan müşteri verileri
-                        labels: ['Müşteri A', 'Müşteri B'], // Müşteri etiketleri
-                        colors: [Colors.green, Colors.orange], // Çubuk renkleri
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            ],),
+           
           ],
         ),
       ),
     );
+  }
+}
+
+class DoughnutChartPainter extends CustomPainter {
+  final int selectedCount;
+  final int totalCount;
+
+  DoughnutChartPainter({required this.selectedCount, required this.totalCount});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 40;
+
+    double radius = size.width / 2;
+
+    // Draw background circle (total)
+    paint.color = const Color.fromARGB(255, 206, 85, 77);
+    canvas.drawCircle(Offset(size.width / 2, size.height / 2), radius, paint);
+
+    // Draw foreground arc (selected)
+    double sweepAngle = totalCount > 0 ? (selectedCount / totalCount) * 360 : 0;
+    paint.color = Color.fromARGB(255, 65, 158, 7);
+    canvas.drawArc(
+      Rect.fromCircle(center: Offset(size.width / 2, size.height / 2), radius: radius),
+      -90 * 3.14159 / 180,
+      sweepAngle * 3.14159 / 180,
+      false,
+      paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant DoughnutChartPainter oldDelegate) {
+    return oldDelegate.selectedCount != selectedCount || oldDelegate.totalCount != totalCount;
   }
 }
 
@@ -136,120 +227,39 @@ class _NotesSectionState extends State<NotesSection> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-            itemCount: widget.notes.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: TextField(
-                  controller: TextEditingController(text: widget.notes[index]),
-                  onChanged: (text) {
-                    setState(() {
-                      widget.notes[index] = text;
-                    });
-                    widget.onNotesChanged(widget.notes);
-                  },
-                ),
-                trailing: IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () {
-                    setState(() {
-                      widget.notes.removeAt(index);
-                    });
-                    widget.onNotesChanged(widget.notes);
-                  },
-                ),
-              );
-            },
-          ),
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: TextField(
-                controller: _controller,
-                decoration: const InputDecoration(labelText: 'Yeni Not Ekle'),
-              ),
-            ),
-            IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () {
-                setState(() {
-                  widget.notes.add(_controller.text);
-                  _controller.clear();
-                });
-                widget.onNotesChanged(widget.notes);
+    return SafeArea(
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: widget.notes.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: TextField(
+                    controller: TextEditingController(text: widget.notes[index]),
+                    onChanged: (text) {
+                      setState(() {
+                        widget.notes[index] = text;
+                      });
+                      widget.onNotesChanged(widget.notes);
+                    },
+                  ),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () {
+                      setState(() {
+                        widget.notes.removeAt(index);
+                      });
+                      widget.onNotesChanged(widget.notes);
+                    },
+                  ),
+                );
               },
             ),
-          ],
-        ),
-      ],
+          ),
+          
+        ],
+      ),
     );
-  }
-}
-
-class HorizontalBarChart extends StatelessWidget {
-  final List<double> data;
-  final List<String> labels;
-  final List<Color> colors;
-
-  const HorizontalBarChart({required this.data, required this.labels, required this.colors});
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: HorizontalBarChartPainter(data: data, labels: labels, colors: colors),
-      child: Container(),
-    );
-  }
-}
-
-class HorizontalBarChartPainter extends CustomPainter {
-  final List<double> data;
-  final List<String> labels;
-  final List<Color> colors;
-
-  HorizontalBarChartPainter({required this.data, required this.labels, required this.colors});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..style = PaintingStyle.fill;
-
-    final maxData = data.reduce((a, b) => a > b ? a : b);
-    final barHeight = size.height / (data.length * 2);
-
-    for (int i = 0; i < data.length; i++) {
-      paint.color = colors[i];
-      final barWidth = (data[i] / maxData) * size.width;
-      final y = i * 2 * barHeight + barHeight / 2;
-
-      // Draw bar
-      canvas.drawRect(
-        Rect.fromLTWH(0, y, barWidth, barHeight),
-        paint,
-      );
-
-      // Draw labels
-      final textPainter = TextPainter(
-        text: TextSpan(
-          text: labels[i],
-          style: const TextStyle(color: Colors.black, fontSize: 14),
-        ),
-        textDirection: TextDirection.ltr,
-      );
-      textPainter.layout(minWidth: 0, maxWidth: size.width);
-      textPainter.paint(
-        canvas,
-        Offset(barWidth + 4, y + barHeight / 2 - textPainter.height / 2),
-      );
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
   }
 }

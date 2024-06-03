@@ -1,5 +1,8 @@
 // ignore_for_file: file_names
-
+// TO DO: Takvim üzerinden istenen tarihe gidebilme
+// Boş not eklememe
+// seçilen tarihe gidilğdiğinde notlar siliniyor
+// notlar ekranına firma ve durum içeren butonlar ekle-- firma seçilir. Butonlardan (ulaşılamadı/satıldı/satılamadı)
 import 'package:depostok/CompanyList.dart';
 import 'package:depostok/Constants.dart';
 import 'package:depostok/MySales.dart';
@@ -20,13 +23,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _controller = SidebarXController(selectedIndex: 0, extended: true);
-
   final _key = GlobalKey<ScaffoldState>();
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: primaryColor,
@@ -52,9 +53,6 @@ class _HomePageState extends State<HomePage> {
                       title: Text(_getTitleByIndex(_controller.selectedIndex)),
                       leading: IconButton(
                         onPressed: () {
-                          // if (!Platform.isAndroid && !Platform.isIOS) {
-                          //   _controller.setExtended(true);
-                          // }
                           _key.currentState?.openDrawer();
                         },
                         icon: const Icon(Icons.menu),
@@ -99,7 +97,7 @@ class ExampleSidebarX extends StatelessWidget {
         decoration: BoxDecoration(
           color: canvasColor,
           borderRadius: BorderRadius.circular(20),
-        ),  
+        ),
         hoverColor: scaffoldBackgroundColor,
         textStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
         selectedTextStyle: const TextStyle(color: Colors.white),
@@ -150,7 +148,6 @@ class ExampleSidebarX extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.all(16.0),
             child: Text('LOGO')
-            //Image.asset('assets/images/avatar.png'),
           ),
         );
       },
@@ -198,7 +195,7 @@ class ExampleSidebarX extends StatelessWidget {
 }
 
 class _ScreensExample extends StatefulWidget {
-    _ScreensExample({
+  _ScreensExample({
     required this.controller,
   });
 
@@ -209,59 +206,79 @@ class _ScreensExample extends StatefulWidget {
 }
 
 class _ScreensExampleState extends State<_ScreensExample> {
-   final _controller = SidebarXController(selectedIndex: 0, extended: true);
+  DateTime selectedDay = DateTime.now();
+  DateTime focusedDay = DateTime.now();
+  final _controller = SidebarXController(selectedIndex: 0, extended: true);
   final _key = GlobalKey<ScaffoldState>();
- 
-  void _onDaySelected(DateTime day, DateTime focusedDay) {
+
+  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     setState(() {
-      selectedDay = day;
+      this.selectedDay = selectedDay;
+      this.focusedDay = focusedDay;
     });
   }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: focusedDay,
+      firstDate: DateTime(2015, 1, 1),
+      lastDate: DateTime(2030, 3, 14),
+    );
+    if (picked != null && picked != focusedDay) {
+      setState(() {
+        focusedDay = picked;
+        selectedDay = picked;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    //final theme = Theme.of(context);
     return AnimatedBuilder(
       animation: widget.controller,
       builder: (context, child) {
-        // final pageTitle = _getTitleByIndex(controller.selectedIndex);
         switch (widget.controller.selectedIndex) {
           case 0:
             return Scaffold(
-         
-          drawer: _buildSidebar(),
-          body: Row(
-            children: [
-          
-              Expanded(
-                child: GridView.count(
-                  crossAxisCount:    2,
-                  children: [
-                    _buildCalendar(),
-                    _buildNotes(),
-                  ],
-                ),
+              drawer: _buildSidebar(),
+              body: Row(
+                children: [
+                  Expanded(
+                    child: GridView.count(
+                      crossAxisCount: 2,
+                      children: [
+                        _buildCalendar(),
+                        _buildNotes(),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        );
+              floatingActionButton: FloatingActionButton(
+                onPressed: () => _selectDate(context),
+                child: Icon(Icons.calendar_today),
+              ),
+            );
           case 1:
             return const WarehouseList(); //Depo Bilgileri
           case 2:
             return const SellProduct(); //Ürün Satış
           case 3:
-            return   CompanyList(); //Firmalar
+            return CompanyList(); //Firmalar
           case 4:
             return const MainPageExample(); //Güzergah
           case 5:
-            return   MySales(); //Satışlar
+            return MySales(); //Satışlar
           case 6:
-            return Settingspage();// UserListScreen(); //Ayarlar
+            return Settingspage(); // Ayarlar
           default:
             return const Text('default state');
         }
       },
     );
   }
+
   Widget _buildSidebar() {
     return SidebarX(
       controller: _controller,
@@ -295,8 +312,7 @@ class _ScreensExampleState extends State<_ScreensExample> {
         ),
         iconTheme: IconThemeData(
           color: Colors.white.withOpacity(0.7),
-          size: 20,
-        ),
+          size: 20),
         selectedIconTheme: const IconThemeData(
           color: Colors.white,
           size: 20,
@@ -305,7 +321,7 @@ class _ScreensExampleState extends State<_ScreensExample> {
       extendedTheme: const SidebarXTheme(
         width: 200,
         decoration: BoxDecoration(
-        //  color: Colors.grey[900],
+          color: canvasColor,
         ),
       ),
       headerBuilder: (context, extended) {
@@ -343,9 +359,9 @@ class _ScreensExampleState extends State<_ScreensExample> {
               child: TableCalendar(
                 headerStyle: const HeaderStyle(formatButtonVisible: false),
                 locale: 'tr_TR',
-                firstDay: DateTime.utc(2020, 10, 16),
+                firstDay: DateTime.utc(2015, 1, 1),
                 lastDay: DateTime.utc(2030, 3, 14),
-                focusedDay: selectedDay,
+                focusedDay: focusedDay,
                 selectedDayPredicate: (day) => isSameDay(day, selectedDay),
                 onDaySelected: (selectedDay, focusedDay) {
                   _onDaySelected(selectedDay, focusedDay);
@@ -405,4 +421,3 @@ String _getTitleByIndex(int index) {
       return 'Not found page';
   }
 }
-
