@@ -1,7 +1,6 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, use_key_in_widget_constructors, library_private_types_in_public_api
 
 import 'package:depostok/CompanyCreate.dart';
-import 'package:depostok/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -33,7 +32,7 @@ class User {
 }
 
 Future<List<User>> fetchUsers() async {
-  final response = await http.get(Uri.parse('http://192.168.1.34:3001/company'));
+  final response = await http.get(Uri.parse('http://10.102.123.119:3005/company'));
 
   if (response.statusCode == 200) {
     List jsonResponse = json.decode(response.body);
@@ -61,11 +60,11 @@ class _CompanyListState extends State<CompanyList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Firma Listesi'),actions: [
+        title: const Text('Firma Listesi'),actions: [
           ElevatedButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const CompanyCreate2()));
+                    MaterialPageRoute(builder: (context) =>   CompanyCreate()));
               },
               child: const Text('FİRMA EKLE')),
         ],
@@ -74,30 +73,54 @@ class _CompanyListState extends State<CompanyList> {
         future: futureUsers,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           } else if (snapshot.hasData) {
             List<User> users = snapshot.data!;
             return SingleChildScrollView(
-              child: Column(
-                children: users.map((user) {
-                  return /*Row(children: [
-                    Text(user.name),
-                    Text('Phone: ${user.phone}'),
-                    Text('Owner: ${user.owner}'),
-                    Text('Location: ${user.location}'),]);*/
-                  ListTile(
-                    title: Text(user.name),
-                    subtitle: Text('Phone: ${user.phone} Owner: ${user.owner} Location: ${user.location}'),
-                   
-                   // isThreeLine: true,
-                  );
-                }).toList(),
-              ),
-            );
+  child: DataTable(
+    columns: const <DataColumn>[
+      DataColumn(
+        label: Text(
+          'FİRMA ADI',
+          style: TextStyle(fontStyle: FontStyle.italic),
+        ),
+      ),
+      DataColumn(
+        label: Text(
+          'FİRMA TELEFON',
+          style: TextStyle(fontStyle: FontStyle.italic),
+        ),
+      ),
+      DataColumn(
+        label: Text(
+          'FİRMA SAHİBİ',
+          style: TextStyle(fontStyle: FontStyle.italic),
+        ),
+      ),
+      DataColumn(
+        label: Text(
+          'KONUMU',
+          style: TextStyle(fontStyle: FontStyle.italic),
+        ),
+      ),
+    ],
+    rows: users.map((user) {
+      return DataRow(
+        cells: <DataCell>[
+          DataCell(Text(user.name)),
+          DataCell(Text(user.phone)),
+          DataCell(Text(user.owner)),
+          DataCell(Text(user.location)),
+        ],
+      );
+    }).toList(),
+  ),
+);
+
           } else {
-            return Text("No data available");
+            return const Text("No data available");
           }
         },
       ),

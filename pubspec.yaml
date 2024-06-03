@@ -26,7 +26,8 @@ dependencies:
   pointer_interceptor: ^0.10.1+1
   popup_menu: ^2.0.0
   two_dimensional_scrollables: ^0.3.0
-
+  table_calendar: ^3.0.1
+  intl: ^0.17.0
 
 
 dev_dependencies:

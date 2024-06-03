@@ -9,6 +9,7 @@ import 'package:depostok/SettingsPage.dart';
 import 'package:depostok/WarehouseList.dart';
 import 'package:flutter/material.dart';
 import 'package:sidebarx/sidebarx.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   final _controller = SidebarXController(selectedIndex: 0, extended: true);
 
   final _key = GlobalKey<ScaffoldState>();
-
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -196,35 +197,53 @@ class ExampleSidebarX extends StatelessWidget {
   void _showDisabledAlert(BuildContext context) {}
 }
 
-class _ScreensExample extends StatelessWidget {
-  const _ScreensExample({
+class _ScreensExample extends StatefulWidget {
+    _ScreensExample({
     required this.controller,
   });
 
   final SidebarXController controller;
 
   @override
+  State<_ScreensExample> createState() => _ScreensExampleState();
+}
+
+class _ScreensExampleState extends State<_ScreensExample> {
+   final _controller = SidebarXController(selectedIndex: 0, extended: true);
+  final _key = GlobalKey<ScaffoldState>();
+ 
+  void _onDaySelected(DateTime day, DateTime focusedDay) {
+    setState(() {
+      selectedDay = day;
+    });
+  }
+  @override
   Widget build(BuildContext context) {
     //final theme = Theme.of(context);
     return AnimatedBuilder(
-      animation: controller,
+      animation: widget.controller,
       builder: (context, child) {
         // final pageTitle = _getTitleByIndex(controller.selectedIndex);
-        switch (controller.selectedIndex) {
+        switch (widget.controller.selectedIndex) {
           case 0:
-            return ListView.builder(
-              padding: const EdgeInsets.only(top: 10),
-              itemBuilder: (context, index) => Container(
-                height: 100,
-                width: double.infinity,
-                margin: const EdgeInsets.only(bottom: 10, right: 10, left: 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Theme.of(context).canvasColor,
-                  boxShadow: const [BoxShadow()],
+            return Scaffold(
+         
+          drawer: _buildSidebar(),
+          body: Row(
+            children: [
+          
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount:    2,
+                  children: [
+                    _buildCalendar(),
+                    _buildNotes(),
+                  ],
                 ),
               ),
-            );
+            ],
+          ),
+        );
           case 1:
             return const WarehouseList(); //Depo Bilgileri
           case 2:
@@ -234,13 +253,134 @@ class _ScreensExample extends StatelessWidget {
           case 4:
             return const MainPageExample(); //Güzergah
           case 5:
-            return const MySales(); //Satışlar
+            return   MySales(); //Satışlar
           case 6:
-            return UserFormScreen();// UserListScreen(); //Ayarlar
+            return Settingspage();// UserListScreen(); //Ayarlar
           default:
             return const Text('default state');
         }
       },
+    );
+  }
+  Widget _buildSidebar() {
+    return SidebarX(
+      controller: _controller,
+      theme: SidebarXTheme(
+        margin: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.grey[900],
+          borderRadius: BorderRadius.circular(20),
+        ),
+        hoverColor: Colors.grey[850],
+        textStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+        selectedTextStyle: const TextStyle(color: Colors.white),
+        itemTextPadding: const EdgeInsets.only(left: 30),
+        selectedItemTextPadding: const EdgeInsets.only(left: 30),
+        itemDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.grey[900]!),
+        ),
+        selectedItemDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.blue.withOpacity(0.37)),
+          gradient: const LinearGradient(
+            colors: [Colors.blueAccent, Colors.grey],
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.28),
+              blurRadius: 30,
+            )
+          ],
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.white.withOpacity(0.7),
+          size: 20,
+        ),
+        selectedIconTheme: const IconThemeData(
+          color: Colors.white,
+          size: 20,
+        ),
+      ),
+      extendedTheme: const SidebarXTheme(
+        width: 200,
+        decoration: BoxDecoration(
+        //  color: Colors.grey[900],
+        ),
+      ),
+      headerBuilder: (context, extended) {
+        return const SizedBox(
+          height: 100,
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text('LOGO'),
+          ),
+        );
+      },
+      items: const [
+        SidebarXItem(icon: Icons.home, label: 'Ana Sayfa'),
+        SidebarXItem(icon: Icons.warehouse, label: 'Depo Bilgileri'),
+        SidebarXItem(icon: Icons.sell, label: 'Ürün Satış'),
+        SidebarXItem(icon: Icons.business_center, label: 'Firmalar'),
+        SidebarXItem(icon: Icons.route, label: 'Güzergah'),
+        SidebarXItem(icon: Icons.attach_money, label: 'Satışlar'),
+        SidebarXItem(icon: Icons.settings, label: 'Ayarlar'),
+      ],
+    );
+  }
+
+  Widget _buildCalendar() {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            const Text(
+              'Takvim',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            Expanded(
+              child: TableCalendar(
+                headerStyle: const HeaderStyle(formatButtonVisible: false),
+                locale: 'tr_TR',
+                firstDay: DateTime.utc(2020, 10, 16),
+                lastDay: DateTime.utc(2030, 3, 14),
+                focusedDay: selectedDay,
+                selectedDayPredicate: (day) => isSameDay(day, selectedDay),
+                onDaySelected: (selectedDay, focusedDay) {
+                  _onDaySelected(selectedDay, focusedDay);
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNotes() {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Text(
+              'Notlarım (${selectedDay.toLocal().toString().split(' ')[0]})',
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            Expanded(
+              child: NotesSection(
+                notes: notes[selectedDay] ?? [],
+                onNotesChanged: (updatedNotes) {
+                  setState(() {
+                    notes[selectedDay] = updatedNotes;
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
