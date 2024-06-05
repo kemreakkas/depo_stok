@@ -1,6 +1,8 @@
 
 
 
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
+
 import 'package:depostok/Route/src/home/main_example.dart';
 import 'package:depostok/Route/src/search_example.dart';
 import 'package:depostok/Route/src/simple_example_hook.dart';

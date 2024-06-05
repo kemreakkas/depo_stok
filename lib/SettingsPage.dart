@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, use_super_parameters
+
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatelessWidget {

@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 class NotesSection extends StatefulWidget {
@@ -32,7 +34,7 @@ class _NotesSectionState extends State<NotesSection> {
           decoration: InputDecoration(
             labelText: 'Yeni Not',
             suffixIcon: IconButton(
-              icon: Icon(Icons.add),
+              icon: const Icon(Icons.add),
               onPressed: _addNote,
             ),
           ),

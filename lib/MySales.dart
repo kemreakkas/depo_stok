@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, use_key_in_widget_constructors, library_private_types_in_public_api
+
 import 'package:depostok/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -48,7 +50,7 @@ class _MySalesState extends State<MySales> {
       });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Müşteri adı boş olamaz!'),
         ),
       );
@@ -111,7 +113,7 @@ class _MySalesState extends State<MySales> {
                               },
                             ),
                             trailing: IconButton(
-                              icon: Icon(Icons.delete),
+                              icon: const Icon(Icons.delete),
                               onPressed: () {
                                 _deleteCustomer(index);
                               },
@@ -196,7 +198,7 @@ class DoughnutChartPainter extends CustomPainter {
 
     // Draw foreground arc (selected)
     double sweepAngle = totalCount > 0 ? (selectedCount / totalCount) * 360 : 0;
-    paint.color = Color.fromARGB(255, 65, 158, 7);
+    paint.color = const Color.fromARGB(255, 65, 158, 7);
     canvas.drawArc(
       Rect.fromCircle(center: Offset(size.width / 2, size.height / 2), radius: radius),
       -90 * 3.14159 / 180,

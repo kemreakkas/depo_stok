@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, avoid_print, use_build_context_synchronously, deprecated_member_use
 
 import 'dart:math';
 
@@ -60,7 +60,7 @@ class _WebTestOsmState extends State<WebTestOsm> with OSMMixinObserver {
       final GeoPoint geoPoint = controller.listenerMapSingleTapping.value!;
       await controller.addMarker(
         geoPoint,
-        markerIcon: MarkerIcon(
+        markerIcon: const MarkerIcon(
           icon: Icon(Icons.push_pin),
         ),
       );
@@ -79,13 +79,13 @@ class _WebTestOsmState extends State<WebTestOsm> with OSMMixinObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("osm web"),
+        title: const Text("osm web"),
         actions: [
           IconButton(
             onPressed: () async {
               await controller.currentLocation();
             },
-            icon: Icon(Icons.location_history),
+            icon: const Icon(Icons.location_history),
           ),
           IconButton(
             onPressed: () async {
@@ -97,7 +97,7 @@ class _WebTestOsmState extends State<WebTestOsm> with OSMMixinObserver {
                 await controller.drawRoad(
                   roadPoints.value.first,
                   roadPoints.value.last,
-                  roadOption: RoadOption(
+                  roadOption: const RoadOption(
                     zoomInto: true,
                     roadColor: Colors.red,
                   ),
@@ -106,7 +106,7 @@ class _WebTestOsmState extends State<WebTestOsm> with OSMMixinObserver {
                 roadPoints.value = roadPoints.value..clear();
               }
             },
-            icon: Icon(Icons.map_outlined),
+            icon: const Icon(Icons.map_outlined),
           ),
           IconButton(
             onPressed: () async {
@@ -164,13 +164,13 @@ class _WebTestOsmState extends State<WebTestOsm> with OSMMixinObserver {
             key: key,
             controller: controller,
             osmOption: OSMOption(
-              zoomOption: ZoomOption(
+              zoomOption: const ZoomOption(
                 initZoom: 5,
               ),
               staticPoints: [
                 StaticPositionGeoPoint(
                   "line 1",
-                  MarkerIcon(
+                  const MarkerIcon(
                     icon: Icon(
                       Icons.train,
                       color: Colors.green,
@@ -200,7 +200,7 @@ class _WebTestOsmState extends State<WebTestOsm> with OSMMixinObserver {
                   GeoPoint(latitude: 47.442475, longitude: 8.4680389)) {
                 await controller.setMarkerIcon(
                   geoPoint,
-                  MarkerIcon(
+                  const MarkerIcon(
                     icon: Icon(
                       Icons.bus_alert,
                       color: Colors.blue,
@@ -221,7 +221,7 @@ class _WebTestOsmState extends State<WebTestOsm> with OSMMixinObserver {
                 ),
               ));
             },
-            mapIsLoading: Center(
+            mapIsLoading: const Center(
               child: Text("map is Loading"),
             ),
           );
@@ -245,7 +245,7 @@ class _WebTestOsmState extends State<WebTestOsm> with OSMMixinObserver {
       print("zoom:$zoom");
       await controller.addMarker(
         GeoPoint(latitude: 47.442475, longitude: 8.4680389),
-        markerIcon: MarkerIcon(
+        markerIcon: const MarkerIcon(
           icon: Icon(
             Icons.car_repair,
             color: Colors.black45,
@@ -255,7 +255,7 @@ class _WebTestOsmState extends State<WebTestOsm> with OSMMixinObserver {
       );
       await controller.setMarkerOfStaticPoint(
         id: "line 2",
-        markerIcon: MarkerIcon(
+        markerIcon: const MarkerIcon(
           icon: Icon(
             Icons.train,
             color: Colors.orange,

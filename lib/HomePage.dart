@@ -1,11 +1,10 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, prefer_const_constructors_in_immutables
 
 import 'package:depostok/CompanyList.dart';
 import 'package:depostok/Constants.dart';
 import 'package:depostok/Homesidebar.dart';
 import 'package:depostok/MySales.dart';
 import 'package:depostok/Route/main.dart';
-import 'package:depostok/Route/src/home/main_example.dart';
 import 'package:depostok/SellProduct.dart';
 import 'package:depostok/SettingsPage.dart';
 import 'package:depostok/WarehouseList.dart';
@@ -128,7 +127,8 @@ class _Screens extends StatefulWidget {
 class _ScreensState extends State<_Screens> {
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
-  final SidebarXController _controller = SidebarXController(selectedIndex: 0, extended: true);
+  final SidebarXController _controller =
+      SidebarXController(selectedIndex: 0, extended: true);
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     setState(() {
@@ -140,6 +140,9 @@ class _ScreensState extends State<_Screens> {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
+      locale: const Locale(
+        'tr_TR',
+      ),
       initialDate: focusedDay,
       firstDate: DateTime(2015, 1, 1),
       lastDate: DateTime(2030, 3, 14),
@@ -183,7 +186,7 @@ class _ScreensState extends State<_Screens> {
               ),
               floatingActionButton: FloatingActionButton(
                 onPressed: () => _selectDate(context),
-                child: Icon(Icons.calendar_today),
+                child: const Icon(Icons.calendar_today),
               ),
             );
           case 1:
@@ -239,7 +242,8 @@ class _ScreensState extends State<_Screens> {
             )
           ],
         ),
-        iconTheme: IconThemeData(color: Colors.white.withOpacity(0.7), size: 20),
+        iconTheme:
+            IconThemeData(color: Colors.white.withOpacity(0.7), size: 20),
         selectedIconTheme: const IconThemeData(
           color: Colors.white,
           size: 20,

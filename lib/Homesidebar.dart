@@ -1,4 +1,6 @@
 
+// ignore_for_file: file_names
+
 import 'package:depostok/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:sidebarx/sidebarx.dart';

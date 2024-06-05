@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, use_key_in_widget_constructors, library_private_types_in_public_api
+
 import 'package:depostok/CompanyCreate.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
