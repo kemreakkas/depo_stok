@@ -1,17 +1,30 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 
-class Settingspage extends StatefulWidget {
-  const Settingspage({super.key});
+class SettingsPage extends StatelessWidget {
+  final bool isDarkMode;
+  final Function(bool) onThemeChanged;
 
-  @override
-  State<Settingspage> createState() => _SettingspageState();
-}
+  const SettingsPage({
+    Key? key,
+    required this.isDarkMode,
+    required this.onThemeChanged,
+  }) : super(key: key);
 
-class _SettingspageState extends State<Settingspage> {
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(child: Scaffold(body: Center(child: Column(children: [Text('settings page')],)),));
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Ayarlar'),
+      ),
+      body: Center(
+        child: SwitchListTile(
+          title: const Text('Dark Mode'),
+          value: isDarkMode,
+          onChanged: (bool value) {
+            onThemeChanged(value);
+          },
+        ),
+      ),
+    );
   }
 }

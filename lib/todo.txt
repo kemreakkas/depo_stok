@@ -1,8 +1,9 @@
-// TO DO: Takvim üzerinden istenen tarihe gidebilme
-// Boş not eklememe
-// seçilen tarihe gidilğdiğinde notlar siliniyor
+// TO DO: 
+// ++Takvim üzerinden istenen tarihe gidebilme
+// ++Boş not eklememe
+// seçilen tarihe gidildiğinde notlar siliniyor
 // notlar ekranına firma ve durum içeren butonlar ekle-- firma seçilir. Butonlardan (ulaşılamadı/satıldı/satılamadı)
-
+https://www.akinsoft.com.tr/programlar/detay/wolvox-erp-programi-erp-mrp-on-muhasebe--woo8
 
 
 

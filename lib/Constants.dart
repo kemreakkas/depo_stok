@@ -13,3 +13,30 @@ final divider = Divider(color: white.withOpacity(0.3), height: 1);
   double width=0;
  Map<DateTime, List<String>> notes = {};
   DateTime selectedDay = DateTime.now();
+  
+  bool _isDarkMode = false;
+  final ThemeData lightTheme = ThemeData(
+    primaryColor: primaryColor,
+    canvasColor: canvasColor,
+    scaffoldBackgroundColor: scaffoldBackgroundColor,
+    textTheme: const TextTheme(
+      headlineSmall: TextStyle(
+        color: Colors.white,
+        fontSize: 46,
+        fontWeight: FontWeight.w800,
+      ),
+    ),
+  );
+
+  final ThemeData darkTheme = ThemeData(
+    primaryColor: Colors.grey[850],
+    canvasColor: Colors.black,
+    scaffoldBackgroundColor: Colors.black,
+    textTheme: const TextTheme(
+      headlineSmall: TextStyle(
+        color: Colors.white,
+        fontSize: 46,
+        fontWeight: FontWeight.w800,
+      ),
+    ),
+  );

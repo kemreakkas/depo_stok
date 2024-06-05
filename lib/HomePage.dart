@@ -11,6 +11,7 @@ import 'package:depostok/SettingsPage.dart';
 import 'package:depostok/WarehouseList.dart';
 import 'package:depostok/notes.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -24,23 +25,31 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _controller = SidebarXController(selectedIndex: 0, extended: true);
   final _key = GlobalKey<ScaffoldState>();
+  bool _isDarkMode = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTheme();
+  }
+
+  Future<void> _loadTheme() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isDarkMode = prefs.getBool('isDarkMode') ?? false;
+    });
+  }
+
+  Future<void> _saveTheme(bool isDarkMode) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isDarkMode', isDarkMode);
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: _isDarkMode ? darkTheme : lightTheme,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: primaryColor,
-        canvasColor: canvasColor,
-        scaffoldBackgroundColor: scaffoldBackgroundColor,
-        textTheme: const TextTheme(
-          headlineSmall: TextStyle(
-            color: Colors.white,
-            fontSize: 46,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
-      ),
       home: Builder(
         builder: (context) {
           final isSmallScreen = MediaQuery.of(context).size.width < 600;
@@ -53,8 +62,15 @@ class _HomePageState extends State<HomePage> {
                   if (!isSmallScreen) HomeSidebarX(controller: _controller),
                   Expanded(
                     child: Center(
-                      child: _ScreensExample(
+                      child: _Screens(
                         controller: _controller,
+                        isDarkMode: _isDarkMode,
+                        onThemeChanged: (isDark) {
+                          setState(() {
+                            _isDarkMode = isDark;
+                            _saveTheme(isDark);
+                          });
+                        },
                       ),
                     ),
                   ),
@@ -68,21 +84,51 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class _ScreensExample extends StatefulWidget {
-  _ScreensExample({
+final ThemeData lightTheme = ThemeData(
+  primaryColor: Colors.blue,
+  canvasColor: Colors.white,
+  scaffoldBackgroundColor: Colors.white,
+  textTheme: const TextTheme(
+    headlineSmall: TextStyle(
+      color: Colors.black,
+      fontSize: 46,
+      fontWeight: FontWeight.w800,
+    ),
+  ),
+);
+
+final ThemeData darkTheme = ThemeData(
+  primaryColor: Colors.grey[850],
+  canvasColor: Colors.black,
+  scaffoldBackgroundColor: Colors.black,
+  textTheme: const TextTheme(
+    headlineSmall: TextStyle(
+      color: Colors.white,
+      fontSize: 46,
+      fontWeight: FontWeight.w800,
+    ),
+  ),
+);
+
+class _Screens extends StatefulWidget {
+  final SidebarXController controller;
+  final bool isDarkMode;
+  final Function(bool) onThemeChanged;
+
+  _Screens({
     required this.controller,
+    required this.isDarkMode,
+    required this.onThemeChanged,
   });
 
-  final SidebarXController controller;
-
   @override
-  State<_ScreensExample> createState() => _ScreensExampleState();
+  State<_Screens> createState() => _ScreensState();
 }
 
-class _ScreensExampleState extends State<_ScreensExample> {
+class _ScreensState extends State<_Screens> {
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
-  final _controller = SidebarXController(selectedIndex: 0, extended: true);
+  final SidebarXController _controller = SidebarXController(selectedIndex: 0, extended: true);
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     setState(() {
@@ -130,7 +176,6 @@ class _ScreensExampleState extends State<_ScreensExample> {
                             });
                           },
                         ),
-                        //_buildNotes(),
                       ],
                     ),
                   ),
@@ -142,17 +187,20 @@ class _ScreensExampleState extends State<_ScreensExample> {
               ),
             );
           case 1:
-            return const WarehouseList(); //Depo Bilgileri
+            return const WarehouseList();
           case 2:
-            return const SellProduct(); //Ürün Satış
+            return const SellProduct();
           case 3:
-            return CompanyList(); //Firmalar
+            return CompanyList();
           case 4:
-            return RouteHomePage(); // MainPageExample(); //Güzergah
+            return RouteHomePage();
           case 5:
-            return MySales(); //Satışlar
+            return MySales();
           case 6:
-            return Settingspage(); // Ayarlar
+            return SettingsPage(
+              isDarkMode: widget.isDarkMode,
+              onThemeChanged: widget.onThemeChanged,
+            );
           default:
             return const Text('default state');
         }
@@ -191,8 +239,7 @@ class _ScreensExampleState extends State<_ScreensExample> {
             )
           ],
         ),
-        iconTheme:
-            IconThemeData(color: Colors.white.withOpacity(0.7), size: 20),
+        iconTheme: IconThemeData(color: Colors.white.withOpacity(0.7), size: 20),
         selectedIconTheme: const IconThemeData(
           color: Colors.white,
           size: 20,
@@ -201,7 +248,7 @@ class _ScreensExampleState extends State<_ScreensExample> {
       extendedTheme: const SidebarXTheme(
         width: 200,
         decoration: BoxDecoration(
-          color: canvasColor,
+          color: Colors.black,
         ),
       ),
       headerBuilder: (context, extended) {
