@@ -40,3 +40,4 @@ final divider = Divider(color: white.withOpacity(0.3), height: 1);
       ),
     ),
   );
+

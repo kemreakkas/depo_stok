@@ -1,51 +1,69 @@
 // ignore_for_file: file_names, library_private_types_in_public_api, prefer_interpolation_to_compose_strings, avoid_print, use_key_in_widget_constructors
 
- 
 // company post işlemi
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-
 class User {
-  
-  final String name;
-  final String phone;
-  final String owner;
+  final String id;
+  final String companyName;
+  final String companyPhone;
+  final String companyOwner;
+  final String companyContact;
+  final String companyContactPhone;
   final String location;
+  final String companyDescription;
 
-  User({
-    required this.name,
-    required this.phone,
-    required this.owner, 
-    required this.location
-  });
+  User(
+      {required this.id,
+      required this.companyName,
+      required this.companyPhone,
+      required this.companyOwner,
+      required this.companyContact,
+      required this.companyContactPhone,
+      required this.location,
+      required this.companyDescription});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      name: json['name'],
-      phone: json['phone'],
-      owner: json['owner'],
-      location:  json['location'],
+      id: json['_id'],
+      companyName: json['companyName'],
+      companyPhone: json['companyPhone'],
+      companyOwner: json['companyOwner'],
+      companyContact: json['companyContact'],
+      companyContactPhone: json['companyContactPhone'],
+      location: json['location'],
+      companyDescription: json['companyDescription'],
     );
   }
 }
 
-Future<User> createUser(String name, String phone, String owner, String location ) async {
+Future<User> createUser(
+    String companyName,
+    String companyPhone,
+    String companyOwner,
+    String location,
+    String companyContact,
+    String companyContactPhone,
+    String companyDescription) async {
   final response = await http.post(
     Uri.parse('https://depo-server.vercel.app/api/company'),
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode({
-      'name': name,
-      'phone': phone,
-      'owner': owner,
-      'location':location
+      'companyName': companyName,
+      'companyPhone': companyPhone,
+      'companyOwner': companyOwner,
+      'companyContact': companyContact,
+      'companyContactPhone': companyContactPhone,
+      'location': location,
+      'companyDescription': companyDescription,
     }),
   );
 
-  print(response.body+'\n');
+  print(response.body + '\n');
   print(response.statusCode);
 
   if (response.statusCode == 201 || response.statusCode == 200) {
@@ -62,10 +80,16 @@ class CompanyCreate extends StatefulWidget {
 
 class _CompanyCreateState extends State<CompanyCreate> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _ownerController = TextEditingController();
+  final TextEditingController _companyNameController = TextEditingController();
+  final TextEditingController _companyPhoneController = TextEditingController();
+  final TextEditingController _companyOwnerController = TextEditingController();
+  final TextEditingController _companyContactController =
+      TextEditingController();
+  final TextEditingController _companyContactPhoneController =
+      TextEditingController();
   final TextEditingController _locationController = TextEditingController();
+  final TextEditingController _companyDescriptionController =
+      TextEditingController();
   Future<User>? _futureUser;
 
   @override
@@ -88,7 +112,7 @@ class _CompanyCreateState extends State<CompanyCreate> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
-            controller: _nameController,
+            controller: _companyNameController,
             decoration: const InputDecoration(labelText: 'Firma Adı'),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -98,7 +122,7 @@ class _CompanyCreateState extends State<CompanyCreate> {
             },
           ),
           TextFormField(
-            controller: _phoneController,
+            controller: _companyPhoneController,
             decoration: const InputDecoration(labelText: 'Firma Numarası'),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -108,20 +132,53 @@ class _CompanyCreateState extends State<CompanyCreate> {
             },
           ),
           TextFormField(
-            controller: _ownerController,
-            decoration: const InputDecoration(labelText: 'Firma iletişim Kişisi'),
+            controller: _companyOwnerController,
+            decoration: const InputDecoration(labelText: 'Firma sahibi'),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Firma sahibi Giriniz';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            controller: _companyContactController,
+            decoration:
+                const InputDecoration(labelText: 'Firma iletişim Kişisi'),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Firma İletişim Kişisi Giriniz';
               }
               return null;
             },
-          ),TextFormField(
+          ),
+          TextFormField(
+            controller: _companyContactPhoneController,
+            decoration:
+                const InputDecoration(labelText: 'Firma iletişim numarası'),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Firma İletişim Numarası';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
             controller: _locationController,
             decoration: const InputDecoration(labelText: 'Konumu'),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Firmanın Konumunu Giriniz';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            controller: _companyDescriptionController,
+            decoration: const InputDecoration(labelText: 'Firma açıklama'),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Firma açıklaması Giriniz';
               }
               return null;
             },
@@ -133,10 +190,13 @@ class _CompanyCreateState extends State<CompanyCreate> {
                 if (_formKey.currentState!.validate()) {
                   setState(() {
                     _futureUser = createUser(
-                      _nameController.text,
-                      _phoneController.text,
-                      _ownerController.text,
+                      _companyNameController.text,
+                      _companyPhoneController.text,
+                      _companyOwnerController.text,
+                      _companyContactController.text,
+                      _companyContactPhoneController.text,
                       _locationController.text,
+                      _companyDescriptionController.text,
                     );
                   });
                 }
@@ -155,7 +215,7 @@ class _CompanyCreateState extends State<CompanyCreate> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {
-            return Text('User Created: ${snapshot.data!.name}');
+            return Text('User Created: ${snapshot.data!.companyName}');
           } else if (snapshot.hasError) {
             return Text('${snapshot.error}');
           }

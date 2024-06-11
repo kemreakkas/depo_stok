@@ -7,32 +7,41 @@ import 'dart:convert';
 
 class User {
   final String id;
-  final String name;
-  final String phone;
-  final String owner;
+  final String companyName;
+  final String companyPhone;
+  final String companyOwner;
+  final String companyContact;
+  final String companyContactPhone;
   final String location;
+  final String companyDescription;
 
-  User({
-    required this.id,
-    required this.name,
-    required this.phone,
-    required this.owner,
-    required this.location,
-  });
+  User(
+      {required this.id,
+      required this.companyName,
+      required this.companyPhone,
+      required this.companyOwner,
+      required this.companyContact,
+      required this.companyContactPhone,
+      required this.location,
+      required this.companyDescription});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['_id'],
-      name: json['name'],
-      phone: json['phone'],
-      owner: json['owner'],
+      companyName: json['companyName'],
+      companyPhone: json['companyPhone'],
+      companyOwner: json['companyOwner'],
+      companyContact: json['companyContact'],
+      companyContactPhone: json['companyContactPhone'],
       location: json['location'],
+      companyDescription: json['companyDescription'],
     );
   }
 }
 
 Future<List<User>> fetchUsers() async {
-  final response = await http.get(Uri.parse('https://depo-server.vercel.app/api/company'));
+  final response =
+      await http.get(Uri.parse('https://depo-server.vercel.app/api/company'));
 
   if (response.statusCode == 200) {
     List jsonResponse = json.decode(response.body);
@@ -75,11 +84,15 @@ class _CompanyListState extends State<CompanyList> {
         setState(() {
           if (searchType == 'name') {
             filteredUsers = users
-                .where((user) => user.name.toLowerCase().contains(query.toLowerCase()))
+                .where((user) => user.companyName
+                    .toLowerCase()
+                    .contains(query.toLowerCase()))
                 .toList();
           } else if (searchType == 'owner') {
             filteredUsers = users
-                .where((user) => user.owner.toLowerCase().contains(query.toLowerCase()))
+                .where((user) => user.companyOwner
+                    .toLowerCase()
+                    .contains(query.toLowerCase()))
                 .toList();
           }
         });
@@ -104,7 +117,8 @@ class _CompanyListState extends State<CompanyList> {
           ),
         ],
       ),
-      body: Column(crossAxisAlignment: CrossAxisAlignment.start,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -140,7 +154,8 @@ class _CompanyListState extends State<CompanyList> {
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value == 'name' ? 'Firma Adı' : 'Firma Sahibi'),
+                      child:
+                          Text(value == 'name' ? 'Firma Adı' : 'Firma Sahibi'),
                     );
                   }).toList(),
                 ),
@@ -162,35 +177,53 @@ class _CompanyListState extends State<CompanyList> {
                         DataColumn(
                           label: Text(
                             'FİRMA ADI',
-                            style: TextStyle(fontStyle: FontStyle.italic),
+                            style: TextStyle(),
                           ),
                         ),
                         DataColumn(
                           label: Text(
                             'FİRMA TELEFON',
-                            style: TextStyle(fontStyle: FontStyle.italic),
+                            style: TextStyle(),
                           ),
                         ),
                         DataColumn(
                           label: Text(
                             'FİRMA SAHİBİ',
-                            style: TextStyle(fontStyle: FontStyle.italic),
+                            style: TextStyle(),
+                          ),
+                        ), DataColumn(
+                          label: Text(
+                            'FİRMA iletişim kişisi',
+                            style: TextStyle(),
+                          ),
+                        ), DataColumn(
+                          label: Text(
+                            'FİRMA iletişim kişi telefon',
+                            style: TextStyle(),
                           ),
                         ),
                         DataColumn(
                           label: Text(
                             'KONUMU',
-                            style: TextStyle(fontStyle: FontStyle.italic),
+                            style: TextStyle(),
+                          ),
+                        ), DataColumn(
+                          label: Text(
+                            'FİRMA Açıklama',
+                            style: TextStyle(),
                           ),
                         ),
                       ],
                       rows: filteredUsers.map((user) {
                         return DataRow(
                           cells: <DataCell>[
-                            DataCell(Text(user.name)),
-                            DataCell(Text(user.phone)),
-                            DataCell(Text(user.owner)),
+                            DataCell(Text(user.companyName)),
+                            DataCell(Text(user.companyPhone)),
+                            DataCell(Text(user.companyOwner)),
+                            DataCell(Text(user.companyContact)),
+                            DataCell(Text(user.companyContactPhone)),
                             DataCell(Text(user.location)),
+                            DataCell(Text(user.companyDescription)),
                           ],
                         );
                       }).toList(),
